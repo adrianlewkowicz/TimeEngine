@@ -1,0 +1,16 @@
+p-menubar {
+  background-color: #f8f9fa;
+  border: none;
+
+  .p-menuitem-link {
+    color: #333;
+    text-decoration: none;
+    &:hover {
+      color: #007bff;
+    }
+  }
+
+  .p-button-text {
+    color: #007bff;
+  }
+}
