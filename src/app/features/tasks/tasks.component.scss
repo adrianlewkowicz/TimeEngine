@@ -1,0 +1,72 @@
+h2 {
+  color: #333333; // Grafitowy kolor dla kontrastu
+  margin-bottom: 20px;
+}
+
+p-accordion-panel {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+  .p-accordion-header {
+    background-color: #6FCF97; // Miętowy kolor
+    padding: 15px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white; // Kontrastujący kolor tekstu
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px 8px 0 0;
+
+    &:hover {
+      background-color: #57AE7E; // Ciemniejsza mięta
+      transform: translateY(-2px);
+    }
+  }
+
+  .p-accordion-content {
+    padding: 20px;
+    background-color: #F2E7FE; // Jasny fiolet
+    color: #333333;
+    border-top: 1px solid #e0e0e0;
+  }
+}
+
+/* Stylizacja przycisków PrimeNG */
+.p-button {
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+
+  &.p-button-success {
+    background-color: #6FCF97;
+    border-color: #57AE7E;
+
+    &:hover {
+      background-color: #57AE7E;
+      border-color: #45915F;
+    }
+  }
+
+  &.p-button-primary {
+    background-color: #8E24AA; // Fioletowy
+    border-color: #6A1B9A;
+
+    &:hover {
+      background-color: #6A1B9A;
+      border-color: #4A148C;
+    }
+  }
+}
+
+/* Ogólny styl kontenera */
+body {
+  background-color: #FAF5FF; // Bardzo jasny fiolet jako tło całej strony
+  color: #333333;
+  font-family: 'Roboto', sans-serif;
+}

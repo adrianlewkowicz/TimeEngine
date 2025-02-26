@@ -1,0 +1,25 @@
+form {
+  max-width: 600px;
+  margin: 0 auto;
+
+  label {
+    color: #4a5568; /* Szary odcień */
+  }
+
+  input,
+  textarea,
+  .p-multiselect,
+  .p-dropdown {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #cbd5e0; /* Jasny szary */
+    border-radius: 4px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+  }
+
+  p-button {
+    background-color: #3182ce; /* Niebieski */
+    border-color: #3182ce;
+  }
+}

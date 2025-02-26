@@ -1,0 +1,47 @@
+<h2 class="text-2xl font-semibold mb-4">Utwórz Nowe Zadanie</h2>
+
+<form (ngSubmit)="createTask()" class="space-y-4">
+  <div>
+    <label class="block text-sm font-medium mb-1">Tytuł Zadania:</label>
+    <input
+      type="text"
+      [(ngModel)]="task.title"
+      name="title"
+      required
+      class="w-full p-2 border rounded-md"
+    />
+  </div>
+
+  <div>
+    <label class="block text-sm font-medium mb-1">Opis Zadania:</label>
+    <textarea
+      [(ngModel)]="task.description"
+      name="description"
+      required
+      class="w-full p-2 border rounded-md"
+    ></textarea>
+  </div>
+
+  <div>
+    <label class="block text-sm font-medium mb-1">Umiejętności:</label>
+    <p-multiSelect
+      [options]="skillsOptions"
+      [(ngModel)]="task.skills"
+      name="skills"
+      placeholder="Wybierz umiejętności"
+      display="chip"
+    ></p-multiSelect>
+  </div>
+
+  <div>
+    <label class="block text-sm font-medium mb-1">Wybierz Projekt:</label>
+    <p-dropdown
+      [options]="projectsOptions"
+      [(ngModel)]="task.projectId"
+      name="projectId"
+      placeholder="Wybierz projekt"
+    ></p-dropdown>
+  </div>
+
+  <p-button label="Dodaj Zadanie" type="submit" class="mt-4"></p-button>
+</form>
