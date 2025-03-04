@@ -5,7 +5,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { ApiService } from '../../core/api.service';
-import { Task } from './Task';
+import { Tasks } from './tasks';
 
 @Component({
   selector: 'app-create-task',
@@ -15,7 +15,7 @@ import { Task } from './Task';
   imports: [CommonModule, FormsModule, MultiSelectModule, DropdownModule, ButtonModule]
 })
 export class CreateTaskComponent {
-  task: Task = {
+  task: Tasks = {
     id: '',
     title: '',
     description: '',
@@ -51,7 +51,7 @@ export class CreateTaskComponent {
     // Usuwamy pole `id` z obiektu przed wysłaniem do API
     const { id, ...taskWithoutId } = this.task;
 
-    this.apiService.createTask(taskWithoutId as Task).subscribe({
+    this.apiService.createTask(taskWithoutId as Tasks).subscribe({
         next: (response) => console.log('✅ Zadanie utworzone!', response),
         error: (error) => console.error('❌ Błąd przy tworzeniu zadania:', error)
     });

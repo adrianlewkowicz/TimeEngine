@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems> <!-- Dodane -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Services/EstimationService.cs" />
+    <Compile Include="Services/ModelTrainer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="4.0.2" />
+    <PackageReference Include="Microsoft.ML.AutoML" Version="0.22.2" />
+  </ItemGroup>
+
+</Project>

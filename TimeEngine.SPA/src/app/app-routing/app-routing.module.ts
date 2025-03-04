@@ -3,6 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: () => import('../features/landing-page/landing-page.module').then(m => m.LandingPageModule)
+  },
+  {
     path: 'tasks',
     loadComponent: () => import('../features/tasks/tasks.component').then(m => m.TasksComponent)
   },
@@ -10,12 +14,15 @@ const routes: Routes = [
     path: 'employees',
     loadComponent: () => import('../features/employees/employees.component').then(m => m.EmployeesComponent)
   },
-  { path: '', redirectTo: 'tasks', pathMatch: 'full' },
-  { path: '**', redirectTo: 'tasks' }
+  {
+    path: 'create-task',
+    loadComponent: () => import('../features/create-task/create-task.component').then(m => m.CreateTaskComponent)
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

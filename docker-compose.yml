@@ -1,0 +1,60 @@
+version: '3.9'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: TimeEngine.SPA/Dockerfile
+    platform: linux/amd64
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+    networks:
+      - timeengine_network
+
+  api:
+    build:
+      context: .
+      dockerfile: TimeEngine.API/Dockerfile
+    platform: linux/amd64
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://0.0.0.0:5000
+      - ConnectionStrings__Default=Server=db,1433;Database=TimeEngineDb;User Id=sa;Password=Password123;TrustServerCertificate=True
+    depends_on:
+      - db
+      - ml
+    ports:
+      - "5002:5000"
+    networks:
+      - timeengine_network
+
+  ml:
+    build:
+      context: .
+      dockerfile: TimeEngine.ML/Dockerfile
+    platform: linux/amd64
+    ports:
+      - "5080:5000"
+    networks:
+      - timeengine_network
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    platform: linux/amd64
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password123
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+    networks:
+      - timeengine_network
+
+volumes:
+  sqlserverdata:
+
+networks:
+  timeengine_network:
