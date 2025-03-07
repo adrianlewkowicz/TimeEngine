@@ -23,7 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\TimeEngine.Core.csproj" />
     <ProjectReference Include="..\Infrastructure\TimeEngine.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\TimeEngine.ML\TimeEngine.ML.csproj" />
+    <ProjectReference Include="..\..\..\TimeEngine.ML\TimeEngine.ML.csproj" />
   </ItemGroup>
 
 </Project>

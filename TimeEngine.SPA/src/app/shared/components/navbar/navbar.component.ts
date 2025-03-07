@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule, NgIf } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -8,24 +9,18 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   standalone: true,
-  imports: [MenubarModule, RouterModule, ButtonModule]
+  imports: [CommonModule, MenubarModule, RouterModule, ButtonModule, NgIf]
 })
 export class NavbarComponent {
-  items = [
-    {
-      label: 'TimeEngineApp',
-      icon: 'pi pi-home',
-      routerLink: '/'
-    },
-    {
-      label: 'Zadania',
-      icon: 'pi pi-list',
-      routerLink: '/tasks'
-    },
-    {
-      label: 'Pracownicy',
-      icon: 'pi pi-users',
-      routerLink: '/employees'
-    }
-  ];
+  isLoggedIn = false;
+
+  get items() {
+    return [
+      { label: 'Strona Główna', icon: 'pi pi-home', routerLink: '/' },
+      ...(this.isLoggedIn ? [
+        { label: 'Zadania', icon: 'pi pi-list', routerLink: '/tasks' },
+        { label: 'Pracownicy', icon: 'pi pi-users', routerLink: '/employees' }
+      ] : [])
+    ];
+  }
 }

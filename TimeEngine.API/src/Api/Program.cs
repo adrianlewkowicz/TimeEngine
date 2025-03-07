@@ -20,7 +20,7 @@ builder.Services.AddControllers();
 
 // 📌 Konfiguracja DbContext z SQL Server
 builder.Services.AddDbContext<TimeEngineContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 // 📌 Rejestracja usług aplikacji
@@ -58,7 +58,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<TimeEngineContext>();
-    if (dbContext.Database.CanConnect())  // Sprawdzenie, czy baza jest dostępna
+    if (dbContext.Database.EnsureCreated())
     {
         var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
         await seeder.SeedAsync();

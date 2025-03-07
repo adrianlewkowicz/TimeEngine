@@ -1,22 +1,32 @@
+// app-routing.module.ts
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('../features/landing-page/landing-page.module').then(m => m.LandingPageModule)
+    loadChildren: () => import('../features/landing-page/landing-page.module')
+      .then(m => m.LandingPageModule)
   },
   {
     path: 'tasks',
-    loadComponent: () => import('../features/tasks/tasks.component').then(m => m.TasksComponent)
+    loadComponent: () => import('../features/tasks/tasks.component')
+      .then(m => m.TasksComponent)
   },
   {
     path: 'employees',
-    loadComponent: () => import('../features/employees/employees.component').then(m => m.EmployeesComponent)
+    loadComponent: () => import('../features/employees/employees.component')
+      .then(m => m.EmployeesComponent)
   },
   {
     path: 'create-task',
-    loadComponent: () => import('../features/create-task/create-task.component').then(m => m.CreateTaskComponent)
+    loadComponent: () => import('../features/create-task/create-task.component')
+      .then(m => m.CreateTaskComponent)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('../features/auth/pages/login/login.module')
+    .then(m => m.LoginModule)
   },
   { path: '**', redirectTo: '' }
 ];
