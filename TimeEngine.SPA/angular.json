@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "TimeEngineApp": {
+    "timeengine-spa": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,12 +17,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/time-engine-app",
+            "outputPath": "dist/timeengine-spa",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js",
-              "@angular/localize/init"
+              "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -33,27 +32,22 @@
               }
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
-            "outputMode": "static",
-            "prerender": false
+            "scripts": []
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1.5MB",
-                  "maximumError": "2MB"
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "8kB",
-                  "maximumError": "12kB"
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
                 }
               ],
               "outputHashing": "all"
@@ -68,15 +62,12 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "proxyConfig": "proxy.conf.json"
-          },
           "configurations": {
             "production": {
-              "buildTarget": "TimeEngineApp:build:production"
+              "buildTarget": "timeengine-spa:build:production"
             },
             "development": {
-              "buildTarget": "TimeEngineApp:build:development"
+              "buildTarget": "timeengine-spa:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,8 +80,7 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing",
-              "@angular/localize/init"
+              "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",

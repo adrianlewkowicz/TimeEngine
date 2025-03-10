@@ -2,15 +2,20 @@
 FROM node:18-alpine AS build
 WORKDIR /app
 
-# Skopiuj cały projekt do katalogu /app
-COPY . /app
+# Skopiuj pliki package*.json
+COPY package*.json ./
+
+# Instaluj zależności
 RUN npm install
+
+# Skopiuj resztę aplikacji
+COPY . .
 
 # Buduj aplikację
 RUN npm run build --configuration=production
 
-# (Opcjonalnie: sprawdź, czy folder został utworzony)
-RUN ls -la /app/dist/time-engine-app
+# sprawdź poprawną nazwę folderu (opcjonalnie do debugowania)
+RUN ls -la /app/dist/timeengine-spa
 
 # Etap 2: Serwowanie aplikacji za pomocą NGINX
 FROM nginx:alpine AS final
@@ -20,12 +25,11 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 RUN rm -f /etc/nginx/conf.d/*
 
-# Kopiuj zawartość katalogu "browser" z etapu build do katalogu Nginx (zwróć uwagę na końcowy ukośnik)
-COPY --from=build /app/dist/time-engine-app/browser/ /usr/share/nginx/html/
+# Kopiuj zbudowaną aplikację (poprawiona ścieżka)
+COPY --from=build /app/dist/timeengine-spa/ /usr/share/nginx/html/
 
-# Kopiuj plik konfiguracyjny nginx
+# Kopiuj plik konfiguracyjny Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
-

@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'TimeEngineApp' title`, () => {
+  it(`should have the 'timeengine-spa' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('TimeEngineApp');
+    expect(app.title).toEqual('timeengine-spa');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, TimeEngineApp');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, timeengine-spa');
   });
 });
