@@ -1,14 +1,15 @@
-from flask import Flask, jsonify
+from fastapi import FastAPI
+from sklearn.linear_model import LinearRegression
+import numpy as np
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route("/", methods=["GET"])
-def home():
-    return jsonify({"message": "Welcome to Model Service!"}), 200
+# Prosty przykładowy trening (na stałe dane demonstracyjne)
+X = np.array([[1, 3], [2, 5], [3, 7]])
+y = np.array([4, 6, 9])
+model = LinearRegression().fit(X, y)
 
-@app.route('/health', methods=['GET'])
-def health_check():
-    return jsonify({"status": "ok"}), 200
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+@app.get("/predict/{experience_level}/{complexity}")
+def predict(experience_level: int, complexity: int):
+    predicted_time = model.predict([[experience_level, complexity]])
+    return {"estimated_time": predicted_time[0]}

@@ -15,7 +15,7 @@ COPY . .
 RUN npm run build --configuration=production
 
 # sprawdź poprawną nazwę folderu (opcjonalnie do debugowania)
-RUN ls -la /app/dist/timeengine-spa
+RUN ls -la /app/dist/timeengine-spa/browser
 
 # Etap 2: Serwowanie aplikacji za pomocą NGINX
 FROM nginx:alpine AS final
@@ -26,7 +26,7 @@ RUN rm -rf ./*
 RUN rm -f /etc/nginx/conf.d/*
 
 # Kopiuj zbudowaną aplikację (poprawiona ścieżka)
-COPY --from=build /app/dist/timeengine-spa/ /usr/share/nginx/html/
+COPY --from=build /app/dist/timeengine-spa/browser/ /usr/share/nginx/html/
 
 # Kopiuj plik konfiguracyjny Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf

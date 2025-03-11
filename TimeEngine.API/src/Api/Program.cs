@@ -1,4 +1,7 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TimeEngine.Core.Interfaces;
 using TimeEngine.Core.Services;
@@ -8,53 +11,84 @@ using TimeEngine.ML.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 📌 Konfiguracja Swaggera
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "TimeEngine API", Version = "v1" });
 });
 
-// 📌 Rejestracja kontrolerów
+// Kontrolery
 builder.Services.AddControllers();
 
-// 📌 Konfiguracja DbContext z SQL Server
+// DB Context
 builder.Services.AddDbContext<TimeEngineContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 📌 Rejestracja usług aplikacji
+// Usługi
 builder.Services.AddTransient<DataSeeder>();
 builder.Services.AddScoped<ITaskEstimationService, TaskEstimationService>();
 builder.Services.AddScoped<IGitHubService, GitHubService>();
 builder.Services.AddSingleton<EstimationService>();
 
+// FastAPI Client
+builder.Services.AddHttpClient<FastApiEstimationService>(client =>
+{
+    client.BaseAddress = new Uri("http://ml:8000"); // "ml" - Docker Compose nazwa usługi
+});
+
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy => policy
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+});
+
+// JWT Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]
+            ?? throw new InvalidOperationException("Brak Jwt:Key w konfiguracji!"))),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
 var app = builder.Build();
 
-// 📌 Obsługa wyjątków i zabezpieczenia
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/error");  // Globalny handler błędów
-    app.UseHsts();  // Wymusza HTTPS w produkcji
+    app.UseExceptionHandler("/error");
+    app.UseHsts();
 }
 
-// 📌 Konfiguracja Swagger UI (dostępny w każdym środowisku)
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "TimeEngine API v1");
-    c.RoutePrefix = string.Empty;  // Ustawienie Swaggera jako strony głównej
+    c.RoutePrefix = string.Empty;
 });
 
-// 📌 Middleware do obsługi requestów
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseCors(policy =>
+    policy.AllowAnyOrigin()
+          .AllowAnyHeader()
+          .AllowAnyMethod());
+
+app.UseAuthentication();
 app.UseAuthorization();
 
-// 📌 Mapowanie kontrolerów
 app.MapControllers();
 
-// 📌 Seedowanie danych (sprawdzenie, czy baza istnieje)
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<TimeEngineContext>();

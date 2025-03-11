@@ -1,0 +1,13 @@
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/bin/Release/net9.0/TimeEngine.ML.deps.json
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/bin/Release/net9.0/TimeEngine.ML.dll
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/bin/Release/net9.0/TimeEngine.ML.pdb
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/obj/Release/net9.0/TimeEngine.ML.csproj.AssemblyReference.cache
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/obj/Release/net9.0/TimeEngine.ML.GeneratedMSBuildEditorConfig.editorconfig
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/obj/Release/net9.0/TimeEngine.ML.AssemblyInfoInputs.cache
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/obj/Release/net9.0/TimeEngine.ML.AssemblyInfo.cs
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/obj/Release/net9.0/TimeEngine.ML.csproj.CoreCompileInputs.cache
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/obj/Release/net9.0/TimeEngine.ML.sourcelink.json
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/obj/Release/net9.0/TimeEngine.ML.dll
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/obj/Release/net9.0/refint/TimeEngine.ML.dll
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/obj/Release/net9.0/TimeEngine.ML.pdb
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.ML/obj/Release/net9.0/ref/TimeEngine.ML.dll

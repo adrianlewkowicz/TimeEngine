@@ -1,0 +1,34 @@
+<!-- 🏆 HERO SECTION -->
+<div class="hero" id="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="fade-in">
+      Tworzymy <span class="highlight">innowacyjne</span> rozwiązania IT
+    </h1>
+    <p class="fade-in">Web | Mobile | Cloud | Desktop</p>
+
+    <button class="cta-btn pulse-effect" (click)="scrollToSection('contact')">
+      📩 Skontaktuj się z nami
+    </button>
+  </div>
+</div>
+
+
+
+<!-- 📌 MENU NAWIGACYJNE -->
+<div class="nav">
+  <a (click)="scrollToSection('hero')">Strona Główna</a>
+  <a (click)="scrollToSection('services')">Usługi</a>
+  <a (click)="scrollToSection('about')">O nas</a>
+  <a (click)="scrollToSection('contact')">Kontakt</a>
+</div>
+
+<!-- 🔥 NASZE USŁUGI -->
+<app-services></app-services>
+<!-- 📌 O NAS -->
+<app-about></app-about>
+<!-- 📌 KONTAKT -->
+<app-contact></app-contact>
+
+<app-footer></app-footer>
+
