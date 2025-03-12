@@ -22,8 +22,22 @@ jobs:
         with:
           submodules: true
           lfs: false
+      
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
+
+      - name: Ensure Angular CLI is installed
+        run: npm install -g @angular/cli
+
+      - name: Verify angular.json changes
+        run: cat TimeEngine.SPA/angular.json
+
+      - name: Clean npm cache
+        run: npm cache clean --force
+
+      - name: Remove node_modules and reinstall dependencies
+        run: rm -rf node_modules package-lock.json && npm install
+
       - name: Get Id Token
         uses: actions/github-script@v6
         id: idtoken
@@ -32,6 +46,7 @@ jobs:
                const coredemo = require('@actions/core')
                return await coredemo.getIDToken()
            result-encoding: string
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -42,7 +57,8 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "TimeEngine.SPA" # App source code path
           api_location: "" # Api source code path - optional
-          output_location: "dist/timeengine-spa" # Built app content directory - optional
+          output_location: "dist/timeengine-spa/browser" # Built app content directory - poprawione na katalog wyjściowy Angulara
+          app_build_command: "ng build --configuration=production --aot"
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
 
