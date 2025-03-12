@@ -26,7 +26,7 @@ jobs:
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
 
-      - name: Ensure Angular CLI is installed
+      - name: Install Angular CLI globally
         run: npm install -g @angular/cli
 
       - name: Verify angular.json changes
