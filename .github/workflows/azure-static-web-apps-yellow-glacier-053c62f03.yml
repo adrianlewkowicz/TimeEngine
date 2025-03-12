@@ -26,8 +26,8 @@ jobs:
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
 
-      - name: Install Angular CLI globally
-        run: npm install -g @angular/cli
+      - name: Install Angular CLI locally
+        run: cd TimeEngine.SPA && npm install @angular/cli
 
       - name: Verify angular.json changes
         run: cat TimeEngine.SPA/angular.json
@@ -36,7 +36,7 @@ jobs:
         run: npm cache clean --force
 
       - name: Remove node_modules and reinstall dependencies
-        run: rm -rf node_modules package-lock.json && npm install
+        run: cd TimeEngine.SPA && rm -rf node_modules package-lock.json && npm install
 
       - name: Get Id Token
         uses: actions/github-script@v6
@@ -46,6 +46,9 @@ jobs:
                const coredemo = require('@actions/core')
                return await coredemo.getIDToken()
            result-encoding: string
+
+      - name: Build Angular App
+        run: cd TimeEngine.SPA && npx ng build --configuration=production --aot
 
       - name: Build And Deploy
         id: builddeploy
@@ -58,7 +61,6 @@ jobs:
           app_location: "TimeEngine.SPA" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "dist/timeengine-spa/browser" # Built app content directory - poprawione na katalog wyjściowy Angulara
-          app_build_command: "ng build --configuration=production --aot"
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
 
