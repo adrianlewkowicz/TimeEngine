@@ -26,7 +26,7 @@ RUN rm -f /etc/nginx/conf.d/*
 COPY --from=build /app/dist/timeengine-spa/browser/ /usr/share/nginx/html/
 
 # Kopiuj plik konfiguracyjny Nginx
-COPY TimeEngine.SPA/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
