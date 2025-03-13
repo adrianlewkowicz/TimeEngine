@@ -1,0 +1,18 @@
+<div class="contact-popup fade-in" *ngIf="showPopup">
+  <div class="contact-header">
+    <h3>📩 Napisz do nas!</h3>
+    <button class="close-btn" (click)="closePopup()">❌</button>
+  </div>
+  <form>
+    <label>Twoje imię</label>
+    <input type="text" placeholder="Wpisz swoje imię">
+
+    <label>Email</label>
+    <input type="email" placeholder="Wpisz swój email">
+
+    <label>Twoja wiadomość</label>
+    <textarea placeholder="Napisz swoją wiadomość"></textarea>
+
+    <button class="send-btn">🚀 Wyślij</button>
+  </form>
+</div>
