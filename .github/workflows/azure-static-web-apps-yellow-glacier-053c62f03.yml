@@ -20,10 +20,10 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # ✅ Aktualizacja do najnowszej wersji
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4  # ✅ Aktualizacja do najnowszej wersji
         with:
           node-version: '18'
 
@@ -36,7 +36,7 @@ jobs:
         working-directory: TimeEngine.SPA
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # ✅ AKTUALIZACJA do `v4`
         with:
           name: build
           path: TimeEngine.SPA/dist/timeengine-spa/browser
@@ -46,9 +46,9 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_YELLOW_GLACIER_053C62F03 }}
           action: "upload"
-          app_location: "TimeEngine.SPA/dist/timeengine-spa/browser" # To jest poprawna ścieżka do plików Angulara
-          output_location: "" # Static Web Apps nie potrzebuje osobnego output_location
-          api_location: "" # Nie używamy API, zostaw pustą wartość
+          app_location: "TimeEngine.SPA/dist/timeengine-spa/browser"
+          output_location: ""
+          api_location: ""
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
