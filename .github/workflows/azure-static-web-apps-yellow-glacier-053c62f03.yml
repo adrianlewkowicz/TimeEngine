@@ -47,7 +47,7 @@ jobs:
                return await coredemo.getIDToken()
            result-encoding: string
 
-     - name: Extract Angular Build from Docker
+      - name: Extract Angular Build from Docker
         run: docker cp $(docker create --rm timeengine-spa):/usr/share/nginx/html/. TimeEngine.SPA/dist/timeengine-spa/browser/
 
 
