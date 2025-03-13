@@ -10,65 +10,45 @@ on:
       - TimeEngine
 
 jobs:
-  build_and_deploy_job:
+  build_and_deploy:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     permissions:
-       id-token: write
-       contents: read
+      id-token: write
+      contents: read
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          submodules: true
-          lfs: false
-      
-      - name: Install OIDC Client from Core Package
-        run: npm install @actions/core@1.6.0 @actions/http-client
+          node-version: '18'
 
-      - name: Install Angular CLI locally
-        run: cd TimeEngine.SPA && npm install @angular/cli
+      - name: Install dependencies
+        run: npm install
+        working-directory: TimeEngine.SPA
 
-      - name: Verify angular.json changes
-        run: cat TimeEngine.SPA/angular.json
+      - name: Build Angular app
+        run: npm run build --configuration=production
+        working-directory: TimeEngine.SPA
 
-      - name: Clean npm cache
-        run: npm cache clean --force
-
-      - name: Remove node_modules and reinstall dependencies
-        run: cd TimeEngine.SPA && rm -rf node_modules package-lock.json && npm install
-
-      - name: Get Id Token
-        uses: actions/github-script@v6
-        id: idtoken
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
-           script: |
-               const coredemo = require('@actions/core')
-               return await coredemo.getIDToken()
-           result-encoding: string
+          name: build
+          path: TimeEngine.SPA/dist/timeengine-spa/browser
 
-      # ✅ Budowanie Dockera przed kopiowaniem plików
-      - name: Build Docker Container
-        run: docker build -t timeengine-spa TimeEngine.SPA/
-
-      # ✅ Tworzenie tymczasowego kontenera i kopiowanie plików Angulara
-      - name: Extract Angular Build from Docker
-        run: docker create --name temp-container timeengine-spa && docker cp temp-container:/usr/share/nginx/html/. TimeEngine.SPA/dist/timeengine-spa/browser/ && docker rm temp-container
-
-      # ✅ Wdrożenie aplikacji do Azure Static Web Apps
-      - name: Build And Deploy
-        id: builddeploy
+      - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_YELLOW_GLACIER_053C62F03 }}
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "TimeEngine.SPA" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "TimeEngine.SPA/dist/timeengine-spa/browser" # Katalog wyjściowy Angulara
-          github_id_token: ${{ steps.idtoken.outputs.result }}
-          ###### End of Repository/Build Configurations ######
+          app_location: "TimeEngine.SPA/dist/timeengine-spa/browser" # To jest poprawna ścieżka do plików Angulara
+          output_location: "" # Static Web Apps nie potrzebuje osobnego output_location
+          api_location: "" # Nie używamy API, zostaw pustą wartość
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -76,7 +56,6 @@ jobs:
     name: Close Pull Request Job
     steps:
       - name: Close Pull Request
-        id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
           action: "close"
