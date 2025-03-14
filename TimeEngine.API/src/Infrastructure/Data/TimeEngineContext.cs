@@ -1,14 +1,19 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TimeEngine.Core.Domain;
+using TimeEngine.Core.Domain.userJwt;
 
-public class TimeEngineContext : DbContext
+public class TimeEngineContext : IdentityDbContext<ApplicationUser>
 {
     public TimeEngineContext(DbContextOptions<TimeEngineContext> options)
         : base(options)
     {
     }
 
-    // DbSety
+    // DbSety dla Identity (opcjonalnie)
+    public DbSet<ApplicationUser> AspNetUsers { get; set; }
+
+    // DbSety dla twoich encji domenowych
     public DbSet<User> Users { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<Task> Tasks { get; set; }
@@ -16,9 +21,15 @@ public class TimeEngineContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(modelBuilder); // WAŻNE dla Identity!
 
-        // Przykładowa konfiguracja
+         // Konfiguracja encji User
+        modelBuilder.Entity<ApplicationUser>(entity =>
+        {
+            entity.ToTable("AspNetUsers");
+        });
+        
+        // Konfiguracja encji User
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable("Users");
@@ -45,7 +56,6 @@ public class TimeEngineContext : DbContext
                 .OnDelete(DeleteBehavior.SetNull);
         });
 
-        
         // Mapa AuditEvent
         modelBuilder.Entity<AuditEvent>(entity =>
         {
