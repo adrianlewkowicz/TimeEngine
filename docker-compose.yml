@@ -21,6 +21,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://0.0.0.0:5050
       - ConnectionStrings__DefaultConnection=Server=db;Database=TimeEngine;User Id=SA;Password=Password123;TrustServerCertificate=True;
+      - GITHUB_TOKEN=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
     depends_on:
       - db
     ports:

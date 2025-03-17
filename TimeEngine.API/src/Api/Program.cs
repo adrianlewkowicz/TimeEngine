@@ -34,6 +34,8 @@ builder.Services.AddTransient<DataSeeder>();
 builder.Services.AddScoped<ITaskEstimationService, TaskEstimationService>();
 builder.Services.AddScoped<IGitHubService, GitHubService>();
 builder.Services.AddSingleton<EstimationService>();
+builder.Services.AddHttpClient<IMLEstimationService, MLEstimationService>();
+
 
 // FastAPI Client
 builder.Services.AddHttpClient<FastApiEstimationService>(client =>
@@ -51,7 +53,7 @@ builder.Services.AddCors(options =>
 });
 
 // JWT Authentication
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<TimeEngineContext>()
     .AddDefaultTokenProviders();
 

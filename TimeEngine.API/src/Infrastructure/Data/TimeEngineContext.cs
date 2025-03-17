@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TimeEngine.Core.Domain;
 using TimeEngine.Core.Domain.userJwt;
 
-public class TimeEngineContext : IdentityDbContext<ApplicationUser>
+public class TimeEngineContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
     public TimeEngineContext(DbContextOptions<TimeEngineContext> options)
         : base(options)
@@ -27,6 +28,11 @@ public class TimeEngineContext : IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<ApplicationUser>(entity =>
         {
             entity.ToTable("AspNetUsers");
+        });
+        
+         modelBuilder.Entity<IdentityRole<Guid>>(entity =>
+        {
+            entity.ToTable("AspNetRoles"); // Przechowywanie ról jako Guid
         });
         
         // Konfiguracja encji User

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TimeEngine.Core.Domain;
+using TimeEngine.Core.Domain.userJwt;
 using TimeEngine.Core.Interfaces;
 using TimeEngine.Infrastructure.Interfaces;
 
@@ -13,12 +14,16 @@ namespace TimeEngine.Api.Controllers
         private readonly TimeEngineContext _context;
         private readonly ITaskEstimationService _estimationService;
         private readonly IGitHubService _gitHubService;
+        private readonly IMLEstimationService _mlEstimationService;
 
-        public TasksController(TimeEngineContext context, ITaskEstimationService estimationService, IGitHubService gitHubService)
+
+        public TasksController(TimeEngineContext context, ITaskEstimationService estimationService, IGitHubService gitHubService, IMLEstimationService mlEstimationService)
         {
             _context = context;
             _estimationService = estimationService;
             _gitHubService = gitHubService;
+            _mlEstimationService = mlEstimationService;
+
         }
 
         // GET: api/Tasks
@@ -40,71 +45,59 @@ namespace TimeEngine.Api.Controllers
             return task;
         }
 
-        // POST: api/Tasks
+        // POST: api/Tasks[Authorize]
         [HttpPost]
         public async Task<ActionResult<Task>> CreateTask([FromBody] Task task)
         {
-            // Sprawdzenie, czy ProjectId jest puste lub nieprawidłowe
+            if (task == null || string.IsNullOrEmpty(task.Title))
+            {
+                return BadRequest(new { Message = "Tytuł zadania jest wymagany." });
+            }
+
             if (task.ProjectId == Guid.Empty || !await _context.Projects.AnyAsync(p => p.Id == task.ProjectId))
             {
-                // Automatyczne tworzenie nowego projektu z użyciem metody fabrycznej
                 var newProject = Project.Create($"Projekt dla zadania: {task.Title}");
-
                 await _context.Projects.AddAsync(newProject);
                 await _context.SaveChangesAsync();
-
-                // Użycie metody domenowej do ustawienia ProjectId
                 task.SetProjectId(newProject.Id);
-                Console.WriteLine($"Nowy projekt utworzony z ID: {task.ProjectId}");
             }
 
-            // Szacowanie czasu zadania przez AI
-            var estimation = _estimationService.EstimateTask(task.Description, task.Skills ?? new List<string>());
-
-            if (estimation == null)
-            {
-                return BadRequest("Nie udało się uzyskać estymacji czasu zadania.");
-            }
-
-            // Ustawienie odpowiedniej estymacji na podstawie wybranego poziomu doświadczenia
-            if (task.EstimationJunior > 0)
-            {
-                task.EstimationJunior = estimation.Junior;
-                task.EstimationMid = 0;
-                task.EstimationSenior = 0;
-            }
-            else if (task.EstimationMid > 0)
-            {
-                task.EstimationJunior = 0;
-                task.EstimationMid = estimation.Mid;
-                task.EstimationSenior = 0;
-            }
-            else if (task.EstimationSenior > 0)
-            {
-                task.EstimationJunior = 0;
-                task.EstimationMid = 0;
-                task.EstimationSenior = estimation.Senior;
-            }
-            else
-            {
-                // Jeśli żaden poziom doświadczenia nie został ustawiony, ustawiamy wartości domyślne
-                task.EstimationJunior = estimation.Junior;
-                task.EstimationMid = estimation.Mid;
-                task.EstimationSenior = estimation.Senior;
-            }
-
-            // Integracja z GitHubem
+            // 1. Generowanie nazwy branch'a na podstawie ID zadania
+            var branchName = $"feature/{task.Id}-{task.Title.Replace(" ", "-").ToLower()}";
             var repoName = $"project-{task.ProjectId}";
-            await _gitHubService.CreateOrSyncRepository(repoName);
-            await _gitHubService.CreateBranch(repoName, task.Title);
 
-            // Zapis zadania do bazy danych
+            // 2. Tworzenie nowego branch'a na GitHub
+            var branchUrl = await _gitHubService.CreateBranch(repoName, branchName);
+            if (string.IsNullOrEmpty(branchUrl))
+            {
+                return BadRequest("Nie udało się utworzyć branch'a w GitHub.");
+            }
+            task.SetGitBranch(branchUrl);
+
+            // 3. Pobranie listy użytkowników i przypisanie najlepszego
+            var candidates = await _context.Users
+                .Where(u => u.Skills.Any(skill => task.Skills.Contains(skill)))
+                .Select(u => new ApplicationUser
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    Email = u.Email
+                })
+                .ToListAsync();
+
+            var bestUser = await _mlEstimationService.PredictBestAssignee(task, candidates);
+            if (bestUser == null)
+            {
+                return BadRequest("Brak odpowiedniego użytkownika do przypisania.");
+            }
+
+            task.AssignUser(bestUser.Id);
+
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetTask), new { id = task.Id }, task);
         }
-
 
         // PUT: api/Tasks/{id}
         [HttpPut("{id}")]

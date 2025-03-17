@@ -10,6 +10,7 @@ public class User
     public string Email { get; private set; }
     public string PasswordHash { get; private set; }
     public bool IsLocked { get; private set; }
+    public List<string> Skills { get; private set; } = new List<string>();
 
     // Przykład ról w postaci listy stringów lub obieatu Role
     private List<UserRole> _roles = new List<UserRole>();
@@ -33,6 +34,14 @@ public class User
         CreatedAt = DateTime.UtcNow;
     }
 
+     public void AddSkill(string skill)
+    {
+        if (!Skills.Contains(skill))
+        {
+            Skills.Add(skill);
+        }
+    }
+    
     public void Lock() => IsLocked = true;
     public void Unlock() => IsLocked = false;
 }

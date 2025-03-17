@@ -4,8 +4,8 @@ using TimeEngine.Core.Domain;
 public class Task
 {
     public Guid Id { get; private set; }
-    public string Title { get; private set; }
-    public string Description { get; private set; }
+    public string? Title { get; private set; } 
+    public string? Description { get; private set; }
     public Guid ProjectId { get; private set; }
     public TaskStatus Status { get; private set; }
     public DateTime CreatedAt { get; private set; }
@@ -17,6 +17,8 @@ public class Task
     public double EstimationJunior { get; set; }
     public double EstimationMid { get; set; }
     public double EstimationSenior { get; set; }
+
+    public string? GitBranchUrl { get; private set; } 
 
     private Task() { }
 
@@ -46,6 +48,11 @@ public class Task
     public void SetProjectId(Guid projectId)
     {
         ProjectId = projectId;
+    }
+
+    public void SetGitBranch(string branchUrl)
+    {
+        GitBranchUrl = branchUrl;
     }
 }
 

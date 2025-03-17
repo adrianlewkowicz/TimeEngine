@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 
 namespace TimeEngine.Core.Domain.userJwt;
-public class ApplicationUser : IdentityUser
+public class ApplicationUser : IdentityUser<Guid>
 {
     public string FullName { get; set; } = string.Empty;
 
