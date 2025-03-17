@@ -1,0 +1,52 @@
+<div class="service-detail" *ngIf="service">
+  <!-- 🔥 Nagłówek -->
+  <header class="service-header">
+    <h1>{{ service.title }}</h1>
+    <p class="subtitle">{{ service.description }}</p>
+  </header>
+
+  <!-- 🖼️ Obrazek -->
+  <section class="image-container">
+    <img [src]="service.image" [alt]="service.title">
+  </section>
+
+  <!-- 📌 ETAP 1: O Usłudze -->
+  <section class="service-modules">
+    <div class="module">
+      <h2>🔥 O usłudze</h2>
+      <p class="service-description">{{ service.details }}</p>
+    </div>
+
+    <!-- 🚀 ETAP 2: Jak działamy -->
+    <div class="module">
+      <h2>🚀 Jak działamy?</h2>
+      <ul>
+        <li *ngFor="let step of service.process">✅ {{ step }}</li>
+      </ul>
+    </div>
+
+    <!-- 🛠️ ETAP 3: Technologie -->
+    <div class="module">
+      <h2>🛠️ Technologie</h2>
+      <p class="tech-description">
+        Korzystamy z nowoczesnych technologii, by dostarczać optymalne i skalowalne rozwiązania.
+      </p>
+      <div class="technology-grid">
+        <span *ngFor="let product of service.products" class="tech-item">⚡ {{ product }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🎯 CTA: Kontakt -->
+  <section class="cta">
+    <h2>🚀 Masz pytania?</h2>
+    <p>Porozmawiajmy o Twoim projekcie i znajdźmy najlepsze rozwiązanie dla Ciebie!</p>
+    <button (click)="togglePopup()" class="contact-btn">📩 Skontaktuj się</button>
+  </section>
+
+  <!-- 🔙 Powrót -->
+  <button class="back-btn" (click)="goBack()">⬅ Powrót do strony głównej</button>
+
+  <!-- 📌 Popup kontaktowy -->
+  <app-contact-popup *ngIf="showPopup" (close)="togglePopup()"></app-contact-popup>
+</div>

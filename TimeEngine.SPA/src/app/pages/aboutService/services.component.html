@@ -1,0 +1,21 @@
+<div id="services" class="section">
+  <h2 class="fade-in">🔥 Nasze <span class="highlight">Usługi</span></h2>
+
+  <div class="service-grid">
+    <p-card class="fade-in service-card" *ngFor="let service of services">
+      <ng-template pTemplate="header">
+        <img [src]="service.image" [alt]="service.title">
+      </ng-template>
+      <ng-template pTemplate="content">
+        <h3>
+          <a [routerLink]="['/service', encodeTitle(service.title)]"
+             [attr.data-title]="service.title"
+             (click)="navigateToService(service)">
+            {{ service.title }}
+          </a>
+        </h3>
+        <p>{{ service.description }}</p>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

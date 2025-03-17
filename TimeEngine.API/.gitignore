@@ -1,0 +1,28 @@
+# Ignorowanie katalogów builda i kompilacji
+bin/
+obj/
+**/obj/
+**/bin/
+.vscode/
+.idea/
+
+# Pliki zależności i buildów .NET
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.csproj.user
+*.csproj.DotSettings
+*.sln.DotSettings
+
+# Ignorowanie plików konfiguracyjnych IDE
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignorowanie prywatnych plików konfiguracyjnych
+appsettings.Development.json
+appsettings.Local.json
+appsettings.Production.json

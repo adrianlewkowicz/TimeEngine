@@ -1,0 +1,64 @@
+<div id="contact" class="section fade-in">
+  <div class="contact-container">
+    <h2 class="fade-in">📩 Skontaktuj się z nami</h2>
+    <p class="fade-in">Masz pytania? Chcesz nawiązać współpracę? Napisz do nas!</p>
+
+    <form [formGroup]="contactForm" (ngSubmit)="sendMessage()" class="contact-form fade-in">
+      <!-- 🔹 Etap 1: Dane osobowe -->
+      <div class="form-step">
+        <h3>👤 Twoje dane</h3>
+        <div class="input-group">
+          <label for="name">Imię i nazwisko</label>
+          <input id="name" type="text" formControlName="name" placeholder="Wpisz swoje imię i nazwisko">
+          <small class="error" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+            Min. 3 znaki!
+          </small>
+        </div>
+
+        <div class="input-group">
+          <label for="email">📧 Email</label>
+          <input id="email" type="email" formControlName="email" placeholder="Twój adres email">
+          <small class="error" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+            Wprowadź poprawny email!
+          </small>
+        </div>
+
+        <div class="input-group">
+          <label for="phone">📞 Telefon</label>
+          <input id="phone" type="tel" formControlName="phone" placeholder="Opcjonalnie - Twój numer telefonu">
+        </div>
+      </div>
+
+      <!-- 🔹 Etap 2: Opis projektu -->
+      <div class="form-step">
+        <h3>💡 Opowiedz nam o swoim projekcie</h3>
+        <div class="input-group">
+          <label for="message">✍️ Opis projektu</label>
+          <textarea id="message" formControlName="message" placeholder="Napisz swoją wiadomość..."></textarea>
+          <small class="error" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+            Min. 10 znaków!
+          </small>
+        </div>
+      </div>
+
+      <!-- 🔹 Etap 3: Wybór usług -->
+      <div class="form-step">
+        <h3>⚙️ Jakie usługi Cię interesują?</h3>
+        <label *ngFor="let service of services">
+          <input type="checkbox" (change)="toggleService(service)"> {{ service }}
+        </label>
+      </div>
+
+      <!-- 🚀 Przyciski -->
+      <button type="submit" [disabled]="isSending" class="contact-btn pulse-effect">
+        <span *ngIf="!isSending">📨 Wyślij zapytanie</span>
+        <span *ngIf="isSending">⏳ Wysyłanie...</span>
+      </button>
+
+      <!-- ✅ Komunikat sukcesu -->
+      <div *ngIf="messageSent" class="success-message fade-in">
+        <p>✅ Dziękujemy za wiadomość! Odpowiemy tak szybko, jak to możliwe. 🚀</p>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<p-menubar [model]="items">
+  <ng-template #start>
+      <img src="assets/Logo.jpg" alt="Logo" width="40" />
+  </ng-template>
+
+  <ng-template #end>
+      <div class="flex items-center gap-2">
+          <button pButton label="PL" (click)="setLanguage('pl')"
+              [disabled]="language === 'pl'" class="p-button-text"></button>
+          <button pButton label="EN" (click)="setLanguage('en')"
+              [disabled]="language === 'en'" class="p-button-text"></button>
+      </div>
+  </ng-template>
+</p-menubar>

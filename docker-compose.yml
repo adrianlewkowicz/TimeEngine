@@ -1,0 +1,72 @@
+services:
+  frontend:
+    build:
+      context: TimeEngine.SPA
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - timeengine_network
+
+  api:
+    build:
+      context: .
+      dockerfile: TimeEngine.API/Dockerfile
+    platform: linux/amd64
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://0.0.0.0:5050
+      - ConnectionStrings__DefaultConnection=Server=db;Database=TimeEngine;User Id=SA;Password=Password123;TrustServerCertificate=True;
+      - GITHUB_TOKEN=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
+    depends_on:
+      - db
+    ports:
+      - "5050:5050"
+    restart: unless-stopped
+    networks:
+      - timeengine_network
+
+  ml:
+    build:
+      context: ./TimeEngine.ML/Python
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    ports:
+      - "5080:8000"
+    restart: unless-stopped
+    networks:
+      - timeengine_network
+
+  db:
+    build: 
+      context: .
+      dockerfile: Db.Dockerfile
+    platform: linux/amd64
+    user: root
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password123
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+    networks:
+      - timeengine_network
+    healthcheck:
+      test: [ "CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "SA", "-P", "Password123", "-Q", "SELECT 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  sqlserverdata:
+
+networks:
+  timeengine_network:
+
