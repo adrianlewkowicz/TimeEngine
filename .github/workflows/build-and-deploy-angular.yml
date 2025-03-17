@@ -21,7 +21,7 @@ jobs:
       working-directory: ./TimeEngine.SPA
 
     - name: Build Angular
-      run: npm run build -- --prod
+      run: npm run build --configuration=production
       working-directory: ./TimeEngine.SPA
 
     - name: Deploy to GitHub Pages
