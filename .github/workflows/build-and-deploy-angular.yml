@@ -34,6 +34,11 @@ jobs:
     - name: Usuń stare pliki przed deployem
       run: rm -rf ./TimeEngine.SPA/dist/timeengine-spa/browser/*
 
+    - name: Build Angular
+      run: npm run build --configuration=production -- --base-href="/TimeEngine/"
+      working-directory: ./TimeEngine.SPA
+
+
     - name: Force push to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
