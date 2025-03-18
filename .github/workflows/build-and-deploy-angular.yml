@@ -41,5 +41,5 @@ jobs:
         publish_dir: ./TimeEngine.SPA/dist/timeengine-spa/browser
 
     - name: Debug - Wyświetl pliki przed publikacją
-      run: ls -R ./TimeEngine.SPA/dist/timeengine-spa/browser
+      run: ls -R ./TimeEngine.SPA/dist/timeengine-spa/browser/browser
 
