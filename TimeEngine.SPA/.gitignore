@@ -40,3 +40,5 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+!TimeEngine.SPA/dist/timeengine-spa/browser/.nojekyll
