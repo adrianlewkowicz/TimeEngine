@@ -34,11 +34,6 @@ jobs:
     - name: Usuń stare pliki przed deployem
       run: rm -rf ./TimeEngine.SPA/dist/timeengine-spa/browser/*
 
-    - name: Przenieś pliki z `browser/browser` do `browser`
-      run: |
-        mv ./TimeEngine.SPA/dist/timeengine-spa/browser/browser/* ./TimeEngine.SPA/dist/timeengine-spa/browser/
-        rm -rf ./TimeEngine.SPA/dist/timeengine-spa/browser/browser
-
     - name: Force push to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
