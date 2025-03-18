@@ -31,8 +31,9 @@ jobs:
     - name: Add .nojekyll to disable Jekyll processing
       run: touch ./TimeEngine.SPA/dist/timeengine-spa/browser/.nojekyll
 
-    - name: Deploy to GitHub Pages
+    - name: Force push to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GH_PAT }}
         publish_dir: ./TimeEngine.SPA/dist/timeengine-spa/browser
+        force_orphan: true 
