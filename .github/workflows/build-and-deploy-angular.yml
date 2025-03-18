@@ -34,9 +34,12 @@ jobs:
     - name: Usuń stare pliki przed deployem
       run: rm -rf ./TimeEngine.SPA/dist/timeengine-spa/browser/*
 
-
     - name: Force push to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GH_PAT }}
         publish_dir: ./TimeEngine.SPA/dist/timeengine-spa/browser
+
+    - name: Debug - Wyświetl pliki przed publikacją
+      run: ls -R ./TimeEngine.SPA/dist/timeengine-spa/browser
+
