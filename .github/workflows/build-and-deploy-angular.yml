@@ -9,7 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
@@ -20,12 +21,21 @@ jobs:
       run: npm install
       working-directory: ./TimeEngine.SPA
 
-    - name: Build Angular
-      run: npm run build -- --prod
+    - name: Build Angular (GitHub Pages compatible)
+      run: npm run build --configuration=production -- --base-href="/TimeEngine/"
       working-directory: ./TimeEngine.SPA
+
+    - name: Debug - Sprawdź strukturę katalogów
+      run: ls -R ./TimeEngine.SPA/dist/timeengine-spa/
+    
+    - name: Add .nojekyll to disable Jekyll processing
+      run: touch ./TimeEngine.SPA/dist/timeengine-spa/browser/.nojekyll
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./TimeEngine.SPA/dist/timeengine-spa
+        github_token: ${{ secrets.GH_PAT }}
+        publish_dir: ./TimeEngine.SPA/dist/timeengine-spa/browser
+
+    - name: Debug - Wyświetl pliki przed publikacją
+      run: ls -R ./TimeEngine.SPA/dist/timeengine-spa/browser

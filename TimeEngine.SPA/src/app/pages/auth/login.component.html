@@ -1,0 +1,19 @@
+<div class="login-container fade-in">
+  <div class="login-box glassmorphism">
+    <h2>🔐 Logowanie</h2>
+    <form (submit)="login()">
+      <div class="input-group">
+        <label for="email">📧 Email</label>
+        <input id="email" type="email" [(ngModel)]="email" required />
+      </div>
+
+      <div class="input-group">
+        <label for="password">🔑 Hasło</label>
+        <input id="password" type="password" [(ngModel)]="password" required />
+      </div>
+
+      <button type="submit" class="login-btn neon-btn">Zaloguj się</button>
+      <p *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</p>
+    </form>
+  </div>
+</div>

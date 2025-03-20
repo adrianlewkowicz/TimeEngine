@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TimeEngine.ML")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8e611602273127ac404b074f74e07eaa5dcd791")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95ecfb9bb9ad60dac516d5920e1268131af08ad3")]
 [assembly: System.Reflection.AssemblyProductAttribute("TimeEngine.ML")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TimeEngine.ML")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

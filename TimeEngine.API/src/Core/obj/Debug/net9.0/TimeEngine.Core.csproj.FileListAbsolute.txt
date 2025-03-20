@@ -1,0 +1,13 @@
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/bin/Debug/net9.0/TimeEngine.Core.deps.json
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/bin/Debug/net9.0/TimeEngine.Core.dll
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/bin/Debug/net9.0/TimeEngine.Core.pdb
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/obj/Debug/net9.0/TimeEngine.Core.csproj.AssemblyReference.cache
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/obj/Debug/net9.0/TimeEngine.Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/obj/Debug/net9.0/TimeEngine.Core.AssemblyInfoInputs.cache
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/obj/Debug/net9.0/TimeEngine.Core.AssemblyInfo.cs
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/obj/Debug/net9.0/TimeEngine.Core.csproj.CoreCompileInputs.cache
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/obj/Debug/net9.0/TimeEngine.Core.sourcelink.json
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/obj/Debug/net9.0/TimeEngine.Core.dll
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/obj/Debug/net9.0/refint/TimeEngine.Core.dll
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/obj/Debug/net9.0/TimeEngine.Core.pdb
+/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Core/obj/Debug/net9.0/ref/TimeEngine.Core.dll

@@ -1,0 +1,125 @@
+// 🌈 Luksusowa paleta kolorów
+$background-color: #0a192f;
+$primary-color: #112240;
+$secondary-color: #64ffda;
+$text-color: #ccd6f6;
+$hover-glow: #ffffff;
+
+// ✨ Stylizacja głównego kontenera
+.landing-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, $background-color, $primary-color);
+  color: $text-color;
+  transition: opacity 1s ease-in-out;
+
+  &.loaded {
+    opacity: 1;
+  }
+}
+
+// 🚀 Ekran ładowania z eleganckim spinnerem
+.loading-screen {
+  position: absolute;
+  text-align: center;
+  font-size: 2rem;
+  animation: fade-in 1s ease-in-out;
+
+  .spinner {
+    margin: 20px auto;
+    width: 40px;
+    height: 40px;
+    border: 5px solid transparent;
+    border-top: 5px solid $secondary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+// 🎆 Tytuł z subtelną animacją
+.title {
+  font-size: 4rem;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: $secondary-color;
+  text-transform: uppercase;
+  animation: fade-in 1.5s ease-in-out;
+}
+
+// 📌 Kafelki – piękny hover efekt
+.tiles {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+// 🔥 Nowoczesne kafelki z pulsowaniem
+.tile {
+  width: 320px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.05);
+  color: $text-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  animation: fade-in 1s ease-in-out;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(100, 255, 218, 0.3);
+    border-color: $secondary-color;
+  }
+
+  &:active {
+    transform: scale(1.05);
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1rem;
+    opacity: 0.8;
+  }
+}
+
+// ✨ Efekt fade-in
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// 🔄 Animacja spinnera
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// 📱 Responsywność – 100% optymalizacja
+@media (max-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
+
+  .tiles {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tile {
+    width: 90%;
+    height: 180px;
+  }
+}

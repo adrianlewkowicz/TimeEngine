@@ -1,0 +1,121 @@
+// 📌 Tło z pięknym neonowym gradientem
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #120136, #4c00ff, #ff0055);
+}
+
+// 📌 Efekt "szklanej" karty logowania
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: fade-in 0.6s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+// 📌 Nagłówek
+h2 {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+// 📌 Pola input - efekt neonowego podświetlenia
+.input-group {
+  margin-bottom: 1.2rem;
+  text-align: left;
+  position: relative;
+}
+
+label {
+  display: block;
+  font-size: 0.9rem;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+
+  &:focus {
+    border-color: #ff0055;
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+  }
+}
+
+// 📌 Przycisk logowania - efekt neonowego podświetlenia
+.neon-btn {
+  margin-top: 1rem;
+  width: 100%;
+  background: linear-gradient(90deg, #ff0055, #4c00ff);
+  border: none;
+  color: white;
+  padding: 0.9rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 0 10px rgba(255, 0, 85, 0.6);
+  text-transform: uppercase;
+  font-weight: bold;
+
+  &:hover {
+    background: linear-gradient(90deg, #4c00ff, #ff0055);
+    box-shadow: 0 0 20px rgba(255, 0, 85, 0.9);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// 📌 Efekt neonowej animacji na przycisku
+.neon-btn::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(90deg, #ff0055, #4c00ff);
+  filter: blur(10px);
+  z-index: -1;
+}
+
+// 📌 Błąd - czerwony neon
+.error-msg {
+  color: #ff0055;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  text-shadow: 0 0 5px rgba(255, 0, 85, 0.6);
+}
+
+// 📌 Animacja fade-in
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

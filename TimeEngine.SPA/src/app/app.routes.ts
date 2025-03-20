@@ -1,22 +1,22 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { ContactComponent } from './pages/contact/contact.component';
-import { ServicesComponent } from './pages/aboutService/services.component';
-import { ServiceDetailComponent } from './pages/aboutService/serviceDetailComponent/service-detail.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
+// 🔹 Definiujemy trasy
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'landing', component: LandingPageComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', loadComponent: () => import('./pages/auth/login.component').then(m => m.LoginComponent) },
+  { path: 'register', loadComponent: () => import('./pages/auth/register/register.component').then(m => m.RegisterComponent) },
+  { path: 'dashboard', loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [AuthGuard] },
+
+  { path: 'home', loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) },
   { path: 'about', loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent) },
   { path: 'contact', loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent) },
-  { path: 'services', component: ServicesComponent, runGuardsAndResolvers: 'always'},
+  { path: 'services', loadComponent: () => import('./pages/aboutService/services.component').then(m => m.ServicesComponent), runGuardsAndResolvers: 'always' },
   {
     path: 'service/:title',
-    loadComponent: () => import('./pages/aboutService/serviceDetailComponent/service-detail.component')
-      .then(m => m.ServiceDetailComponent)
+    loadComponent: () => import('./pages/aboutService/serviceDetailComponent/service-detail.component').then(m => m.ServiceDetailComponent)
   },
-  { path: '**', redirectTo: '' },
+  { path: 'settings', loadComponent: () => import('./pages/dashboard/settings/settings.component').then(m => m.SettingsComponent), canActivate: [AuthGuard] },
+
+  { path: '**', redirectTo: '/login' }
 ];

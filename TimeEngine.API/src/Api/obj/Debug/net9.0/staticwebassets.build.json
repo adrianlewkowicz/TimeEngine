@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "ylEhQkR0eKcG9k5pn7GLlCF2TZGb3r1zvJj0uBJi5oI=",
+  "Source": "TimeEngine.API",
+  "BasePath": "_content/TimeEngine.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

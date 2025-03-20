@@ -9,6 +9,7 @@ using TimeEngine.Core.Interfaces;
 using TimeEngine.Core.Services;
 using TimeEngine.Infrastructure.Interfaces;
 using TimeEngine.Infrastructure.Service;
+using TimeEngine.Infrastructure.Services;
 using TimeEngine.ML.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,8 +21,29 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "TimeEngine API", Version = "v1" });
-});
 
+    // 🔐 Jeśli API wymaga autoryzacji JWT
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Wpisz token JWT w formacie: Bearer {token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+            },
+            new string[] {}
+        }
+    });
+});
 // Kontrolery
 builder.Services.AddControllers();
 
@@ -35,6 +57,7 @@ builder.Services.AddScoped<ITaskEstimationService, TaskEstimationService>();
 builder.Services.AddScoped<IGitHubService, GitHubService>();
 builder.Services.AddSingleton<EstimationService>();
 builder.Services.AddHttpClient<IMLEstimationService, MLEstimationService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 // FastAPI Client
