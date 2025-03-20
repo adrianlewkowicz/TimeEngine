@@ -7,9 +7,9 @@ import { ServicesComponent } from './pages/aboutService/services.component';
 import { ServiceDetailComponent } from './pages/aboutService/serviceDetailComponent/service-detail.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingPageComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: '', loadComponent: () => import('./pages/landing-page/landing-page.component').then(m => m.LandingPageComponent) },
+  { path: 'home', loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) },
+  { path: 'dashboard', loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent) },
   { path: 'about', loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent) },
   { path: 'contact', loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent) },
   { path: 'services', component: ServicesComponent, runGuardsAndResolvers: 'always'},
