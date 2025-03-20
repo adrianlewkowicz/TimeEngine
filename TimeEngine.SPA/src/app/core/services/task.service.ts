@@ -11,54 +11,64 @@ export class TaskService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * 🔐 Pobiera nagłówki z tokenem (jeśli jest dostępny)
+   */
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
-
-    // Sprawdzenie, czy token istnieje
     if (!token) {
-      console.warn("⚠️ Brak tokena w localStorage! Nieautoryzowane żądania mogą nie działać.");
+      console.warn('⚠️ Brak tokena! Nieautoryzowane żądania mogą nie działać.');
+      return new HttpHeaders({ 'Content-Type': 'application/json' }); // Brak Authorization
     }
-
     return new HttpHeaders({
-      'Authorization': token ? `Bearer ${token}` : '',
-      'Content-Type': 'application/json' // ✅ Dodano Content-Type
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
   }
 
+  /**
+   * 📌 Pobiera listę zadań
+   */
   getTasks(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl, { headers: this.getHeaders() })
       .pipe(
-        catchError(this.handleError) // ✅ Obsługa błędów
+        catchError(error => this.handleError(error, 'Błąd pobierania zadań!'))
       );
   }
 
+  /**
+   * ➕ Dodaje nowe zadanie
+   */
   addTask(title: string, projectId: string = 'default-project-id'): Observable<any> {
     const taskData = { title, projectId };
 
     return this.http.post<any>(this.apiUrl, taskData, { headers: this.getHeaders() })
       .pipe(
-        catchError(this.handleError) // ✅ Obsługa błędów
+        catchError(error => this.handleError(error, 'Błąd dodawania zadania!'))
       );
   }
 
+  /**
+   * 🗑 Usuwa zadanie
+   */
   deleteTask(taskId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${taskId}`, { headers: this.getHeaders() })
       .pipe(
-        catchError(this.handleError) // ✅ Obsługa błędów
+        catchError(error => this.handleError(error, 'Błąd usuwania zadania!'))
       );
   }
 
-  // 🔴 Obsługa błędów HTTP
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    console.error("❌ Błąd HTTP:", error);
+  /**
+   * ❌ Obsługa błędów HTTP
+   */
+  private handleError(error: HttpErrorResponse, message: string): Observable<never> {
+    console.error(`❌ ${message}`, error);
 
-    let errorMessage = "Wystąpił błąd podczas komunikacji z API.";
+    let errorMessage = `${message} (kod: ${error.status})`;
     if (error.error instanceof ErrorEvent) {
-      // Błąd klienta (np. brak internetu)
       errorMessage = `Błąd klienta: ${error.error.message}`;
-    } else {
-      // Błąd serwera (np. 500, 404)
-      errorMessage = `Serwer zwrócił kod ${error.status}: ${error.message}`;
+    } else if (!error.status) {
+      errorMessage = 'Serwer nie odpowiada. Sprawdź połączenie.';
     }
 
     return throwError(() => new Error(errorMessage));

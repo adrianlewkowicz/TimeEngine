@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.Api.csproj": {}
+    "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.API.csproj": {}
   },
   "projects": {
-    "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.Api.csproj": {
+    "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.Api.csproj",
-        "projectName": "TimeEngine.Api",
-        "projectPath": "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.Api.csproj",
+        "projectUniqueName": "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.API.csproj",
+        "projectName": "TimeEngine.API",
+        "projectPath": "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.API.csproj",
         "packagesPath": "/Users/adrianlewkowicz/.nuget/packages/",
         "outputPath": "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/obj/",
         "projectStyle": "PackageReference",

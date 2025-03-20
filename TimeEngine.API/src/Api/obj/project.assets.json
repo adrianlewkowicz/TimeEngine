@@ -10980,9 +10980,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.Api.csproj",
-      "projectName": "TimeEngine.Api",
-      "projectPath": "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.Api.csproj",
+      "projectUniqueName": "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.API.csproj",
+      "projectName": "TimeEngine.API",
+      "projectPath": "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/TimeEngine.API.csproj",
       "packagesPath": "/Users/adrianlewkowicz/.nuget/packages/",
       "outputPath": "/Users/adrianlewkowicz/Desktop/Shober/TimeEngine.API/src/Api/obj/",
       "projectStyle": "PackageReference",
@@ -11094,7 +11094,7 @@
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: Microsoft.CodeAnalysis.Workspaces.MSBuild 4.8.0 requires Microsoft.CodeAnalysis.Common (= 4.8.0) but version Microsoft.CodeAnalysis.Common 4.9.2 was resolved.",
+      "message": "Wykryta wersja pakietu jest poza ograniczeniami zależności: element Microsoft.CodeAnalysis.Workspaces.MSBuild 4.8.0 wymaga wersji Microsoft.CodeAnalysis.Common (= 4.8.0), ale rozpoznano wersję Microsoft.CodeAnalysis.Common 4.9.2.",
       "libraryId": "Microsoft.CodeAnalysis.Common",
       "targetGraphs": [
         "net9.0"
@@ -11104,7 +11104,7 @@
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: Microsoft.CodeAnalysis.Workspaces.MSBuild 4.8.0 requires Microsoft.CodeAnalysis.Workspaces.Common (= 4.8.0) but version Microsoft.CodeAnalysis.Workspaces.Common 4.9.2 was resolved.",
+      "message": "Wykryta wersja pakietu jest poza ograniczeniami zależności: element Microsoft.CodeAnalysis.Workspaces.MSBuild 4.8.0 wymaga wersji Microsoft.CodeAnalysis.Workspaces.Common (= 4.8.0), ale rozpoznano wersję Microsoft.CodeAnalysis.Workspaces.Common 4.9.2.",
       "libraryId": "Microsoft.CodeAnalysis.Workspaces.Common",
       "targetGraphs": [
         "net9.0"

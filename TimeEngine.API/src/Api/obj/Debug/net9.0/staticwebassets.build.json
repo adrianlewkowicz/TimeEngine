@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "Dac6uoiaCKtQZ+Xyig6/z06IHUCIm/23649Scs8aTAM=",
-  "Source": "TimeEngine.Api",
-  "BasePath": "_content/TimeEngine.Api",
+  "Hash": "ylEhQkR0eKcG9k5pn7GLlCF2TZGb3r1zvJj0uBJi5oI=",
+  "Source": "TimeEngine.API",
+  "BasePath": "_content/TimeEngine.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
