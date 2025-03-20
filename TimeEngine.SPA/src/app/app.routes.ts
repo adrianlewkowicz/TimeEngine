@@ -7,8 +7,8 @@ import { ServicesComponent } from './pages/aboutService/services.component';
 import { ServiceDetailComponent } from './pages/aboutService/serviceDetailComponent/service-detail.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'landing', component: LandingPageComponent },
+  { path: '', component: LandingPageComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'about', loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent) },
   { path: 'contact', loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent) },
