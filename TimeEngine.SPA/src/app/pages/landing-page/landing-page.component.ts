@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -7,12 +7,33 @@ import { Router, RouterModule } from '@angular/router';
   selector: 'app-landing-page',
   imports: [CommonModule, RouterModule],
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.scss'
+  styleUrls: ['./landing-page.component.scss']
 })
-export class LandingPageComponent {
+export class LandingPageComponent implements OnInit {
+  isLoaded = false;
+  countdown = 3;
+
   constructor(private router: Router) {}
 
+  ngOnInit() {
+    this.startCountdown();
+  }
+
+  startCountdown() {
+    const interval = setInterval(() => {
+      if (this.countdown > 0) {
+        this.countdown--;
+      } else {
+        clearInterval(interval);
+        this.isLoaded = true;
+      }
+    }, 1000);
+  }
+
   navigateTo(route: string) {
-    this.router.navigate([route]);
+    this.isLoaded = false;
+    setTimeout(() => {
+      this.router.navigate([route]);
+    }, 500);
   }
 }

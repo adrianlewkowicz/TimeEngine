@@ -1,0 +1,108 @@
+<div class="dashboard-container">
+  <!-- 📌 Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">TimeEngine</div>
+    <nav>
+      <ul>
+        <li (click)="setActivePage('overview')" [class.active]="activePage === 'overview'">📊 Przegląd</li>
+        <li (click)="setActivePage('tasks')" [class.active]="activePage === 'tasks'">✅ Zadania</li>
+        <li (click)="setActivePage('ai-learning')" [class.active]="activePage === 'ai-learning'">🤖 Nauka AI</li>
+        <li (click)="setActivePage('settings')" [class.active]="activePage === 'settings'">⚙️ Ustawienia</li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- 📌 Główna zawartość -->
+  <main class="content fade-in">
+    <!-- 📊 PRZEGLĄD -->
+    <section *ngIf="activePage === 'overview'">
+      <h2 class="section-title">📊 Przegląd</h2>
+      <div class="stats">
+        <div class="card">
+          <h3>🕒 Czas pracy</h3>
+          <p>{{ workTime }}</p>
+        </div>
+        <div class="card">
+          <h3>📚 Nauka AI</h3>
+          <p>{{ aiLearningTime }}</p>
+        </div>
+        <div class="card">
+          <h3>🔥 Osiągnięcia</h3>
+          <p>{{ achievements }}</p>
+        </div>
+      </div>
+      <div class="ai-suggestions">
+        <h2>🤖 Inteligentne sugestie</h2>
+        <p>{{ aiMessage }}</p>
+      </div>
+    </section>
+
+    <!-- ✅ ZADANIA -->
+    <section *ngIf="activePage === 'tasks'">
+      <h2 class="section-title">📅 Twoje Zadania</h2>
+
+      <!-- Dodawanie nowego zadania -->
+      <div class="task-input">
+        <input #taskInput type="text" placeholder="Dodaj nowe zadanie">
+        <button (click)="addTask(taskInput.value); taskInput.value = ''">➕</button>
+      </div>
+
+      <!-- 📊 PrimeNG Table dla zadań -->
+      <p-table [value]="tasks" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="title">Zadanie <p-sortIcon field="title"></p-sortIcon></th>
+            <th>Status</th>
+            <th>Repozytorium</th>
+            <th>Użytkownicy</th>
+            <th>Akcja</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-task>
+          <tr>
+            <td>{{ task.title }}</td>
+            <td>
+              <p-tag [value]="task.status" [severity]="getSeverity(task.status)"></p-tag>
+            </td>
+            <td>
+              <a [href]="task.repoUrl" target="_blank" class="pi pi-github text-blue-500 text-lg"></a>
+            </td>
+            <td>
+              <button pButton icon="pi pi-users" class="p-button-rounded p-button-info" (click)="viewUsers($event, task)"></button>
+            </td>
+            <td>
+              <button pButton icon="pi pi-search" class="p-button-rounded p-button-secondary" (click)="viewTaskDetails($event, task)"></button>
+              <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteTask(task.id)"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <!-- 📌 Popover: Podgląd szczegółów zadania -->
+      <p-popover #taskPopover (onHide)="selectedTask = null">
+        <div *ngIf="selectedTask" class="p-4">
+          <h3>{{ selectedTask.title }}</h3>
+          <p>Status: <p-tag [value]="selectedTask.status" [severity]="getSeverity(selectedTask.status)"></p-tag></p>
+          <p>Opis: {{ selectedTask.description }}</p>
+          <p>Repozytorium: <a [href]="selectedTask.repoUrl" target="_blank">{{ selectedTask.repoUrl }}</a></p>
+          <p>Użytkownicy:</p>
+          <ul>
+            <li *ngFor="let user of selectedTask.users">{{ user.name }} ({{ user.role }})</li>
+          </ul>
+          <button pButton label="Zamknij" class="p-button-text" (click)="taskPopover.hide()"></button>
+        </div>
+      </p-popover>
+
+      <!-- 📌 Popover: Dodawanie użytkowników do zadania -->
+      <p-popover #userPopover>
+        <div class="p-4">
+          <h3>Dodaj użytkownika</h3>
+          <p-dropdown [options]="allUsers" [(ngModel)]="selectedUser" optionLabel="name" placeholder="Wybierz użytkownika"></p-dropdown>
+          <button pButton label="Dodaj" class="mt-2" (click)="addUserToTask()"></button>
+        </div>
+      </p-popover>
+    </section>
+
+
+  </main>
+</div>

@@ -1,13 +1,23 @@
-<div class="landing-container">
-  <h1>Witaj w TimeEngine!</h1>
-  <div class="tiles">
-    <div class="tile" (click)="navigateTo('home')">
-      <h2>🌍 Wizytówka</h2>
-      <p>Odkryj naszą stronę główną</p>
-    </div>
-    <div class="tile" (click)="navigateTo('dashboard')">
-      <h2>⚙️ System</h2>
-      <p>Zarządzaj czasem i ucz się z AI</p>
+<div class="landing-container" [ngClass]="{ 'loaded': isLoaded }">
+  <div *ngIf="!isLoaded" class="loading-screen">
+    <h2>🔄 Witaj w TimeEngine...</h2>
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="isLoaded" class="content">
+    <h1 class="title">
+      <span>TimeEngine</span>
+    </h1>
+
+    <div class="tiles">
+      <div class="tile" (click)="navigateTo('home')">
+        <h2>🌍 Wizytówka</h2>
+        <p>Odkryj naszą stronę główną</p>
+      </div>
+      <div class="tile" (click)="navigateTo('dashboard')">
+        <h2>⚙️ System</h2>
+        <p>Zarządzaj czasem i ucz się z AI</p>
+      </div>
     </div>
   </div>
 </div>
